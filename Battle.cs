@@ -17,36 +17,62 @@ namespace ArenaFighter
             
         }
         
-        public void EngageBattle()
+        public bool EngageBattle()
         {
+            // TODO Generate battle log
+            BattleLogger newlog = new BattleLogger();
             int roundNr = 1;
             Random rnd = new Random();
-            while (_player.Health > 0 && _opponent.Health > 0)
+            bool bothAreAlive = true;
+            bool isAlive = true;
+
+            while (bothAreAlive)
             {
                 
-                double playerRoundSpeed = _player.Speed * (rnd.NextDouble() - 0.5);
-                double opponentRoundSpeed = _opponent.Speed * (rnd.NextDouble() - 0.5);
-                
+                double playerSpeed = _player.Speed * (rnd.NextDouble() - 0.5);
+                double opponentSpeed = _opponent.Speed * (rnd.NextDouble() - 0.5);
+                bool playerAttack = playerSpeed >= opponentSpeed ? true : false;
+
                 Console.WriteLine($"Round {roundNr}");
-                if (playerRoundSpeed >= opponentRoundSpeed)
+                if (playerAttack)
                 {
-                    Round.AttackRound(_player, _opponent);
-                    Round.AttackRound(_opponent, _player);
+                    Round.AttackRound(_player, _opponent, newlog, ref roundNr);
+                    
                 }
                 else 
                 {
-                    Round.AttackRound(_opponent, _player);
-                    Round.AttackRound(_player, _opponent);
+                    Round.AttackRound(_opponent, _player, newlog, ref roundNr);
+                    
                 }
 
-                Console.WriteLine(_player.Health <= 0 ? "You are dead!" : $"Your health is: {_player.Health}");
-                Console.WriteLine(_opponent.Health <= 0 ? "You opponent is dead" : $"The opponent health is: {_opponent.Health}");
+                // TODO Save round to log.
+
+                if (_player.Health <= 0)
+                {
+                    Console.WriteLine("You are dead!");
+                    isAlive = false;
+
+                    newlog.WriteLog();
+                    return isAlive;
+                    
+                }
+                if (_opponent.Health <= 0)
+                {
+                    Console.WriteLine("Your opponent is dead!");
+                    // TODO
+                    newlog.WriteLog();
+                    return isAlive;
+                }
+                
+                Console.WriteLine($"Your health is: {_player.Health}");
+                Console.WriteLine($"The opponent health is: {_opponent.Health}");
                 roundNr++;
 
                 
                 Console.ReadKey();
             }
-
+            
+            return isAlive;
         }
 
     }

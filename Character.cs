@@ -59,7 +59,7 @@ namespace ArenaFighter
 
         private void SetDamage() => Damage = Strength * 1.5;
 
-        private void SetHitChance() => HitChance = 50 + Agility * 1.5;
+        private void SetHitChance() => HitChance = 54 + Agility * 1.5;
 
         private void SetCritChance() => CritChance = (Agility + Strength) / 6.0;
 
@@ -71,7 +71,7 @@ namespace ArenaFighter
 
         public void SetIsPlayer() => IsPlayer = true;
 
-        public void SaveCharacter()
+        public void GetCharacterData()
         {
 
         }

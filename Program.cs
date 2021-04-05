@@ -16,12 +16,12 @@ namespace ArenaFighter
             player.SetIsPlayer();
             Console.WriteLine("Your name is: {0}", player.CharacterName);
 
-            Battle newBattle = new Battle(player);
+            Battle EngageBattle = new Battle(player);
 
 
-            newBattle.EngageBattle();
-            
+            bool playerIsAlive = EngageBattle.EngageBattle();
 
+            Console.WriteLine(playerIsAlive ? "You survived!" : "Game Over!");
 
             
         }
