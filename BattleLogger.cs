@@ -10,21 +10,22 @@ namespace ArenaFighter
     class BattleLogger
     {
         List<RoundLogger> rounds = new List<RoundLogger>();
-        string timestamp;
+        //string timestamp;
         string filename;
         string filePath;
+        static private int counter = 1;
 
         public BattleLogger()
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "battleLogs");
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            timestamp = DateTime.Now.ToString("yyMMddHHmmss");
-            filename = $"battleLog{timestamp}.log";
+            //timestamp = DateTime.Now.ToString("yyMMddHHmmss");
+            filename = $"battleLog{counter++}.log";
             filePath = Path.Combine(path,filename);
             
         }
 
-        public void logRound(int round, string attackerName,double attackerDamage, string defenderName, double defenderHealth)
+        public void logRound(string round, string attackerName, string attackerDamage, string defenderName, string defenderHealth)
         {
             rounds.Add(new RoundLogger() 
             { 
@@ -45,6 +46,7 @@ namespace ArenaFighter
                 await file.WriteLineAsync(round.SaveOutput());
             }
         }
+
 
     }
 }

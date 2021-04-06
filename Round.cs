@@ -24,7 +24,7 @@ namespace ArenaFighter
             {
                 Console.WriteLine($"{(attacker.IsPlayer == true ? "You" : attacker.CharacterName)} missed!!! How unfortunate!!");
                 damageDone = 0;
-                newlog.logRound(roundNr, attacker.CharacterName, damageDone, defender.CharacterName, defender.Health);
+                newlog.logRound(roundNr.ToString(), attacker.CharacterName, damageDone.ToString(), defender.CharacterName, defender.Health.ToString());
                 return;
             }
             if (tryToHit <= attacker.CritChance)
@@ -34,23 +34,18 @@ namespace ArenaFighter
                     0 : Math.Round((Double)(defender.Health - criticalDamageDone),2);
                 Console.WriteLine($"{(attacker.IsPlayer == true ? "You" : attacker.CharacterName)}" +
                     $" critically hit {(attacker.IsPlayer == true ? defender.CharacterName : "you")}, dealing {criticalDamageDone} damage");
-                newlog.logRound(roundNr, attacker.CharacterName, damageDone, defender.CharacterName, defender.Health);
+                newlog.logRound(roundNr.ToString(), attacker.CharacterName, damageDone.ToString(), defender.CharacterName, defender.Health.ToString());
                 return;
             }
             damageDone = Math.Round((Double)damageDone - defender.Block, 2);
+            damageDone = damageDone <= 0 ? 0 : damageDone;
             defender.Health = defender.Health - damageDone < 0 ? 0 : Math.Round((Double)(defender.Health - damageDone), 2);
 
             Console.WriteLine($"{(attacker.IsPlayer == true ? "You" : attacker.CharacterName)}" +
                 $" hit {(attacker.IsPlayer == true ? defender.CharacterName : "you")}, dealing {damageDone} damage ");
-            newlog.logRound(roundNr, attacker.CharacterName, damageDone, defender.CharacterName, defender.Health);
-
-
+            newlog.logRound(roundNr.ToString(), attacker.CharacterName, damageDone.ToString(), defender.CharacterName, defender.Health.ToString());
 
         }
-
-        private static void UpdateLog()
-        {
-
-        }
+        
     }
 }

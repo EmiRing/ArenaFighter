@@ -10,16 +10,18 @@ namespace ArenaFighter
     {
         Character _player;
         Character _opponent;
+        static int difficulty = 1;
         public Battle(Character player)
         {
             _player = player;
-            _opponent = new Character(null);
-            
+            _opponent = new Character(null, difficulty);
+            _opponent.DisplayCharacterData();
+            difficulty++;
         }
         
         public bool EngageBattle()
         {
-            // TODO Generate battle log
+            
             BattleLogger newlog = new BattleLogger();
             int roundNr = 1;
             Random rnd = new Random();
@@ -45,22 +47,24 @@ namespace ArenaFighter
                     
                 }
 
-                // TODO Save round to log.
+                
 
                 if (_player.Health <= 0)
                 {
                     Console.WriteLine("You are dead!");
                     isAlive = false;
 
-                    newlog.WriteLog();
+                    _ = newlog.WriteLog();
+                    
                     return isAlive;
                     
                 }
                 if (_opponent.Health <= 0)
                 {
                     Console.WriteLine("Your opponent is dead!");
-                    // TODO
-                    newlog.WriteLog();
+                    
+                    _ = newlog.WriteLog();
+                    
                     return isAlive;
                 }
                 
@@ -75,5 +79,6 @@ namespace ArenaFighter
             return isAlive;
         }
 
+       
     }
 }

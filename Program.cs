@@ -8,20 +8,41 @@ namespace ArenaFighter
     {
         static void Main(string[] args)
         {
-            
-
-            Console.Write("Enter your name: ");
+            FileReader.DeleteFiles();
+            Console.WriteLine("Welcome to this little game.");
+            Console.Write("Please enter your name or one will be given to you: ");
             string input = Console.ReadLine();
             Character player = new Character(input);
             player.SetIsPlayer();
-            Console.WriteLine("Your name is: {0}", player.CharacterName);
 
-            Battle EngageBattle = new Battle(player);
+            if (input == "") Console.WriteLine("You were given the name: {0}", player.CharacterName);
+            player.DisplayCharacterData();
 
+            bool playerIsAlive = true;
+            while (playerIsAlive)
+            {
 
-            bool playerIsAlive = EngageBattle.EngageBattle();
+                Battle EngageBattle = new Battle(player);
 
-            Console.WriteLine(playerIsAlive ? "You survived!" : "Game Over!");
+                playerIsAlive = EngageBattle.EngageBattle();
+
+                if (!playerIsAlive)
+                {
+                    Console.WriteLine("You died. Game over!");
+                    Console.ReadKey();
+                    break;
+                }
+
+                Console.WriteLine("You survived the battle!");
+                Console.Write("Do you want to Fight again Y/N:");
+                string fightAgain = Console.ReadLine();
+                if (!(fightAgain == "Y" || fightAgain == "y")) break;
+
+                Console.WriteLine("------------------------------------------------");
+            }
+
+            FileReader.GetFiles();
+            
 
             
         }

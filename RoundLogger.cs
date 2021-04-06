@@ -8,15 +8,29 @@ namespace ArenaFighter
 {
     class RoundLogger
     {
-        public int Round { get; set; }
+        public RoundLogger()
+        {
+
+        }
+
+        public RoundLogger(string round, string attackerName, string attackerDamage, string defenderName, string defenderHealth)
+        {
+            Round = round;
+            AttackerName = attackerName;
+            AttackerDamage = attackerDamage;
+            DefenderName = defenderName;
+            DefenderHealth = defenderHealth;
+        }
+
+        public string Round { get; set; }
 
         public string AttackerName { get; set; }
 
-        public double AttackerDamage { get; set; }
+        public string AttackerDamage { get; set; }
 
         public string DefenderName { get; set; }
 
-        public double DefenderHealth { get; set; }
+        public string DefenderHealth { get; set; }
 
         public string SaveOutput()
         {
@@ -25,6 +39,10 @@ namespace ArenaFighter
             return outputToSave;
         }
 
+        public void PrintOutput()
+        {
+            Console.WriteLine($"Round {Round}: {AttackerName} dealt {AttackerDamage} to {DefenderName}, leaving {DefenderHealth} health left.");
 
+        }
     }
 }
